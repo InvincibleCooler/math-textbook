@@ -397,16 +397,9 @@ mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; margin: 8p
     return div;
   }
 
-  // --- Throttled flip ---
-  function canFlip() {
-    if (!pageFlip || isFlipping) return false;
-    var now = Date.now();
-    if (now - lastFlipTime < FLIP_COOLDOWN) return false;
-    lastFlipTime = now;
-    return true;
-  }
-  function safeFlipNext() { if (canFlip()) pageFlip.flipNext(); }
-  function safeFlipPrev() { if (canFlip()) pageFlip.flipPrev(); }
+  // --- Safe flip (pageFlip methods are already throttled after init) ---
+  function safeFlipNext() { if (pageFlip) pageFlip.flipNext(); }
+  function safeFlipPrev() { if (pageFlip) pageFlip.flipPrev(); }
 
   // --- Init ---
   function init() {
@@ -455,7 +448,7 @@ mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; margin: 8p
     }
     tocUl.addEventListener('click', function(ev) {
       var li = ev.target.closest('[data-p]');
-      if (li && canFlip()) {
+      if (li && pageFlip) {
         pageFlip.flip(parseInt(li.getAttribute('data-p')));
         closeSb();
       }
@@ -480,9 +473,26 @@ mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; margin: 8p
 
     pageFlip.loadFromHTML(document.querySelectorAll('#bk .page'));
 
-    // Debounce: track flip start/end
+    // Monkey-patch flip methods with throttle at the source
+    var _origFlipNext = pageFlip.flipNext.bind(pageFlip);
+    var _origFlipPrev = pageFlip.flipPrev.bind(pageFlip);
+    var _origFlip = pageFlip.flip.bind(pageFlip);
+
+    function throttledFlip(origFn) {
+      return function() {
+        var now = Date.now();
+        if (isFlipping || now - lastFlipTime < FLIP_COOLDOWN) return;
+        lastFlipTime = now;
+        origFn.apply(null, arguments);
+      };
+    }
+
+    pageFlip.flipNext = throttledFlip(_origFlipNext);
+    pageFlip.flipPrev = throttledFlip(_origFlipPrev);
+    pageFlip.flip = throttledFlip(_origFlip);
+
+    // Track flip state
     pageFlip.on('changeState', function(ev) {
-      // ev.data is the new state: 'flipping', 'user_fold', 'fold_corner', 'read'
       if (ev.data === 'flipping' || ev.data === 'user_fold') {
         isFlipping = true;
       } else {
