@@ -301,8 +301,13 @@ body {
     pageFlip = new St.PageFlip(bkEl, {
       width: pageW, height: pageH, size: 'fixed', showCover: true,
       mobileScrollSupport: false, usePortrait: isMobile, drawShadow: true,
-      flippingTime: 700, maxShadowOpacity: 0.25, startPage: 0, autoSize: false
+      flippingTime: 700, maxShadowOpacity: 0.25, startPage: 0, autoSize: false,
+      disableFlipByClick: true
     });
+
+    // 페이지 넘기기 마우스 이벤트 비활성화 (텍스트 선택 허용)
+    bkEl.addEventListener('mousedown', function(e) { e.stopPropagation(); }, true);
+    bkEl.addEventListener('mousemove', function(e) { e.stopPropagation(); }, true);
 
     pageFlip.loadFromHTML(document.querySelectorAll('#bk .page'));
     pageFlip.on('flip', function(ev) { upPI(ev.data); });
