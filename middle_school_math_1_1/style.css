@@ -1,0 +1,367 @@
+/* 중학교 수학 교과서 스타일시트 */
+
+/* ===== 기본 레이아웃 ===== */
+:root {
+  --primary: #1a5276;
+  --accent: #2e86c1;
+  --light-bg: #f4f8fb;
+  --border: #d4e6f1;
+  --success: #27ae60;
+  --warning: #e67e22;
+  --danger: #c0392b;
+  --gray: #7f8c8d;
+  --text: #2c3e50;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "맑은 고딕", sans-serif;
+  line-height: 1.8;
+  color: var(--text);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  background: #fff;
+}
+
+/* ===== 제목 ===== */
+h1 {
+  font-size: 2rem;
+  color: var(--primary);
+  border-bottom: 3px solid var(--accent);
+  padding-bottom: 0.5rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: 1.6rem;
+  color: var(--primary);
+  border-left: 5px solid var(--accent);
+  padding-left: 0.8rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+  color: #2c3e50;
+  margin-top: 1.8rem;
+  margin-bottom: 0.8rem;
+}
+
+h4 {
+  font-size: 1.1rem;
+  color: #34495e;
+  margin-top: 1.5rem;
+}
+
+/* ===== 구분선 ===== */
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+/* ===== 인용문 (학습 목표, 생각해 봅시다 등) ===== */
+blockquote {
+  background: var(--light-bg);
+  border-left: 4px solid var(--accent);
+  margin: 1.2rem 0;
+  padding: 1rem 1.2rem;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.98rem;
+}
+
+blockquote blockquote {
+  background: #e8f0fe;
+  border-left-color: var(--success);
+}
+
+blockquote p {
+  margin: 0.4rem 0;
+}
+
+/* ===== 수식 ===== */
+.MathJax, .MathJax_Display {
+  font-size: 1.05rem !important;
+}
+
+mjx-container[display="true"] {
+  margin: 1.2rem 0 !important;
+  overflow-x: auto;
+}
+
+/* ===== 표 ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+  font-size: 0.95rem;
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 0.6rem 0.8rem;
+  text-align: center;
+}
+
+th {
+  background: var(--light-bg);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+tr:nth-child(even) {
+  background: #fafcfe;
+}
+
+/* ===== 정의 박스 ===== */
+blockquote strong:first-child,
+blockquote p:first-child > strong:first-child {
+  color: var(--primary);
+}
+
+/* 정의/성질/공식 등 강조 박스 스타일 */
+h4 + blockquote,
+h3 + blockquote {
+  background: #eaf2f8;
+  border-left-color: var(--primary);
+}
+
+/* ===== 리스트 ===== */
+ul, ol {
+  padding-left: 1.8rem;
+  margin: 0.8rem 0;
+}
+
+li {
+  margin-bottom: 0.4rem;
+}
+
+li > p {
+  margin: 0.2rem 0;
+}
+
+/* ===== 코드 블록 (문제 풀이 등) ===== */
+code {
+  background: #f0f3f5;
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  font-family: "D2Coding", "Nanum Gothic Coding", monospace;
+}
+
+pre {
+  background: #f7f9fb;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.9rem;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+/* ===== 강조 ===== */
+strong {
+  color: #1a1a2e;
+}
+
+em {
+  color: #555;
+}
+
+/* ===== 이미지 플레이스홀더 ===== */
+p:has(> img), p:has(> a > img) {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+img {
+  max-width: 100%;
+  border-radius: 6px;
+}
+
+/* [그림: ...] 표시용 */
+p:only-child {
+  /* 그림 설명 텍스트 */
+}
+
+/* ===== 목차 (pandoc toc) ===== */
+nav#TOC {
+  background: var(--light-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+  margin: 2rem 0;
+}
+
+nav#TOC > ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+nav#TOC ul ul {
+  padding-left: 1.2rem;
+}
+
+nav#TOC a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+nav#TOC a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* ===== 링크 ===== */
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ===== 반응형 ===== */
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+    font-size: 15px;
+  }
+
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.3rem; }
+  h3 { font-size: 1.15rem; }
+
+  table {
+    font-size: 0.85rem;
+  }
+
+  th, td {
+    padding: 0.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 0.8rem;
+  }
+
+  blockquote {
+    padding: 0.7rem 0.8rem;
+    margin: 0.8rem 0;
+  }
+}
+
+/* ===== 인쇄 스타일 ===== */
+@media print {
+  body {
+    max-width: none;
+    padding: 0;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #000;
+  }
+
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+    color: #000;
+  }
+
+  h1 {
+    border-bottom-color: #000;
+  }
+
+  h2 {
+    border-left-color: #333;
+  }
+
+  blockquote {
+    background: #f5f5f5;
+    border-left-color: #333;
+    page-break-inside: avoid;
+  }
+
+  table {
+    page-break-inside: avoid;
+  }
+
+  hr {
+    border-top-color: #ccc;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  nav#TOC {
+    page-break-after: always;
+  }
+
+  /* \newpage 지원 */
+  .newpage {
+    page-break-before: always;
+  }
+}
+
+/* ===== 특수 박스 클래스 (pandoc div 사용 시) ===== */
+.definition {
+  background: #eaf2f8;
+  border: 1px solid var(--accent);
+  border-left: 5px solid var(--primary);
+  border-radius: 6px;
+  padding: 1rem 1.2rem;
+  margin: 1.2rem 0;
+}
+
+.example {
+  background: #fef9e7;
+  border: 1px solid #f9e79f;
+  border-left: 5px solid var(--warning);
+  border-radius: 6px;
+  padding: 1rem 1.2rem;
+  margin: 1.2rem 0;
+}
+
+.problem {
+  background: #f4ecf7;
+  border: 1px solid #d7bde2;
+  border-left: 5px solid #8e44ad;
+  border-radius: 6px;
+  padding: 1rem 1.2rem;
+  margin: 1.2rem 0;
+}
+
+.solution {
+  background: #eafaf1;
+  border: 1px solid #a9dfbf;
+  border-left: 5px solid var(--success);
+  border-radius: 6px;
+  padding: 1rem 1.2rem;
+  margin: 1.2rem 0;
+}
+
+.note {
+  background: #fdedec;
+  border: 1px solid #f5b7b1;
+  border-left: 5px solid var(--danger);
+  border-radius: 6px;
+  padding: 1rem 1.2rem;
+  margin: 1.2rem 0;
+}

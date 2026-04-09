@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Core Verbs & Prepositions</title>
+<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --page-bg: #FFFFF0;
+  --text-color: #2c2c2c;
+  --heading-color: #1a3a5c;
+  --def-border: #2563eb;
+  --def-bg: #eef4ff;
+  --example-border: #e67e22;
+  --example-bg: #fef6ee;
+  --check-border: #27ae60;
+  --check-bg: #eefbf3;
+  --cover-gold: #d4a843;
+  --sidebar-bg: #f8f8f0;
+  --sidebar-hover: #e8e8d8;
+}
+
+.dark-mode {
+  --page-bg: #1e1e1e;
+  --text-color: #e0e0e0;
+  --heading-color: #7ab3ef;
+  --def-border: #4a90d9;
+  --def-bg: #1a2a3a;
+  --example-border: #d4883a;
+  --example-bg: #2a2018;
+  --check-border: #3aaf6a;
+  --check-bg: #1a2a1e;
+  --sidebar-bg: #2a2a2a;
+  --sidebar-hover: #3a3a3a;
+}
+
+body {
+  font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+  background: #e8e0d0;
+  color: var(--text-color);
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.dark-mode body, body.dark-mode { background: #121212; }
+
+.toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 16px; background: #2c3e50; color: #fff; z-index: 100; flex-shrink: 0; font-size: 14px;
+}
+.toolbar button {
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+  color: #fff; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 13px;
+}
+.toolbar button:hover { background: rgba(255,255,255,0.25); }
+.toolbar .page-info { font-size: 14px; min-width: 120px; text-align: center; }
+.toolbar .tg { display: flex; gap: 8px; align-items: center; }
+
+.sidebar {
+  position: fixed; left: -360px; top: 0; width: 360px; height: 100vh;
+  background: var(--sidebar-bg); z-index: 200; transition: left 0.3s ease;
+  overflow-y: auto; box-shadow: 2px 0 12px rgba(0,0,0,0.3);
+}
+.sidebar.open { left: 0; }
+.sidebar-hdr {
+  position: sticky; top: 0; background: #2c3e50; color: #fff;
+  padding: 14px 16px; display: flex; justify-content: space-between; align-items: center;
+  font-size: 16px; font-weight: 700;
+}
+.sidebar-hdr button { background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; }
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 199; }
+.overlay.open { display: block; }
+
+.toc-list { list-style: none; padding: 8px 0; }
+.toc-list li {
+  padding: 8px 16px; cursor: pointer; border-bottom: 1px solid rgba(0,0,0,0.06);
+  font-size: 14px; color: var(--text-color); transition: background 0.15s;
+}
+.toc-list li:hover { background: var(--sidebar-hover); }
+.toc-list li.ch { font-weight: 700; font-size: 15px; color: var(--heading-color); padding-top: 12px; }
+.toc-list li .pg { float: right; color: #999; font-size: 12px; }
+
+.book-area { flex: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+
+.page {
+  background: var(--page-bg); padding: 28px 32px; overflow: hidden;
+  font-size: 14.5px; line-height: 1.72; color: var(--text-color); position: relative;
+}
+
+.page.cover-page {
+  background: linear-gradient(135deg, #1a3a2a, #2a5a4a, #1a3a2a);
+  display: flex; align-items: center; justify-content: center; text-align: center; padding: 40px;
+}
+.cv { color: #fff; }
+.cv .sub { font-size: 14px; color: rgba(255,255,255,0.65); margin-bottom: 18px; letter-spacing: 4px; }
+.cv .t1 { font-size: 30px; font-weight: 800; color: var(--cover-gold); margin-bottom: 6px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+.cv .t2 { font-size: 20px; font-weight: 700; color: var(--cover-gold); margin-bottom: 24px; }
+.cv .ln { width: 80px; height: 2px; background: var(--cover-gold); margin: 0 auto 18px; }
+.cv .inf { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 28px; line-height: 1.6; }
+
+.page.back-cover {
+  background: linear-gradient(135deg, #1a3a2a, #2a5a4a, #1a3a2a);
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; color: rgba(255,255,255,0.5); font-size: 14px;
+}
+
+.page h1 { font-size: 20px; font-weight: 800; color: var(--heading-color); margin: 0 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--heading-color); }
+.page h2 { font-size: 17px; font-weight: 700; color: var(--heading-color); margin: 12px 0 8px; }
+.page h3 { font-size: 15px; font-weight: 700; color: var(--heading-color); margin: 10px 0 6px; }
+.page h4 { font-size: 14px; font-weight: 700; color: var(--heading-color); margin: 8px 0 4px; }
+.page p { margin: 5px 0; }
+.page ul, .page ol { margin: 5px 0 5px 20px; }
+.page li { margin: 2px 0; }
+.page table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: 13px; }
+.page th, .page td { border: 1px solid #ccc; padding: 4px 7px; text-align: left; }
+.page th { background: rgba(0,0,0,0.05); font-weight: 600; }
+.dark-mode .page th { background: rgba(255,255,255,0.08); }
+.dark-mode .page th, .dark-mode .page td { border-color: #555; }
+.page hr { border: none; border-top: 1px solid #ddd; margin: 10px 0; }
+.dark-mode .page hr { border-top-color: #444; }
+.page blockquote {
+  margin: 8px 0; padding: 8px 12px; border-left: 4px solid var(--def-border);
+  background: var(--def-bg); border-radius: 0 5px 5px 0; font-size: 13.5px;
+}
+.page code { background: rgba(0,0,0,0.06); padding: 1px 4px; border-radius: 3px; font-size: 13px; }
+.dark-mode .page code { background: rgba(255,255,255,0.1); }
+
+.pg-num { position: absolute; bottom: 8px; font-size: 11px; color: #aaa; }
+.pg-num.l { left: 16px; }
+.pg-num.r { right: 16px; }
+
+.bot {
+  display: flex; align-items: center; justify-content: center;
+  padding: 7px 16px; background: #2c3e50; color: #fff; flex-shrink: 0; gap: 12px; font-size: 13px;
+}
+.bot button {
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+  color: #fff; padding: 5px 16px; border-radius: 4px; cursor: pointer; font-size: 13px;
+}
+.bot button:hover { background: rgba(255,255,255,0.25); }
+
+.ld {
+  position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: #e8e0d0; z-index: 9999; flex-direction: column; gap: 16px; font-size: 18px; color: #333;
+}
+.ld .sp { width: 40px; height: 40px; border: 4px solid #ccc; border-top-color: #2c3e50; border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 800px) {
+  .page { padding: 16px 14px; font-size: 13px; }
+  .page h1 { font-size: 17px; }
+  .page h2 { font-size: 15px; }
+  .cv .t1 { font-size: 22px; }
+  .cv .t2 { font-size: 16px; }
+  .toolbar { padding: 4px 10px; font-size: 12px; }
+  .sidebar { width: 85vw; left: -85vw; }
+}
+</style>
+</head>
+<body>
+
+<div class="ld" id="ld"><div class="sp"></div><div>Loading textbook...</div></div>
+
+<div class="overlay" id="ov"></div>
+<div class="sidebar" id="sb">
+  <div class="sidebar-hdr"><span>Contents</span><button id="sbClose">&times;</button></div>
+  <ul class="toc-list" id="toc"></ul>
+</div>
+
+<div class="toolbar">
+  <div class="tg"><button id="tocBtn">&#9776; Contents</button></div>
+  <div class="page-info" id="pi">...</div>
+  <div class="tg"><button id="dk">&#9789;</button></div>
+</div>
+
+<div class="book-area" id="ba"><div id="bk"></div></div>
+
+<div class="bot">
+  <button id="pv">&#9664; Prev</button>
+  <span id="pi2">-</span>
+  <button id="nx">Next &#9654;</button>
+</div>
+
+<script src="content.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  function renderMd(md) {
+    return marked.parse(md);
+  }
+
+  var pageFlip = null;
+  var allPages = [];
+  var tocEntries = [];
+  var isMobile = window.innerWidth <= 800;
+
+  function buildPages() {
+    var pages = [];
+    var toc = [];
+    pages.push({type: 'cover'});
+
+    for (var s = 0; s < TEXTBOOK_SECTIONS.length; s++) {
+      var section = TEXTBOOK_SECTIONS[s];
+      var md = section.content;
+      var tm = md.match(/^#+\s+(.+)/m);
+      var title = tm ? tm[1].replace(/\*\*/g, '') : section.name;
+      var isChapter = /^#\s/.test(md.trim());
+      toc.push({title: title, pageIndex: pages.length, isChapter: isChapter});
+
+      var parts = md.split(/\n---\n/);
+      for (var i = 0; i < parts.length; i++) {
+        var part = parts[i].trim();
+        if (!part) continue;
+        pages.push({type: 'content', html: renderMd(part), section: section.name});
+      }
+    }
+
+    pages.push({type: 'back'});
+    if (pages.length % 2 !== 0) pages.push({type: 'blank'});
+    return {pages: pages, toc: toc};
+  }
+
+  function makePage(data, idx) {
+    var div = document.createElement('div');
+    div.className = 'page';
+    if (data.type === 'cover' || data.type === 'back') div.setAttribute('data-density', 'hard');
+
+    if (data.type === 'cover') {
+      div.classList.add('cover-page');
+      div.innerHTML =
+        '<div class="cv">' +
+          '<div class="sub">NATIVE SENSE APPROACH</div>' +
+          '<div class="ln"></div>' +
+          '<div class="t1">English Core</div>' +
+          '<div class="t2">Verbs & Prepositions</div>' +
+          '<div class="ln"></div>' +
+          '<div class="inf">Part 1: Core Verbs (12) &middot; Part 2: Prepositions (44)<br>' +
+          'Feel it, don\'t memorize it.</div>' +
+        '</div>';
+    } else if (data.type === 'back') {
+      div.classList.add('back-cover');
+      div.innerHTML = '<div>English Core Verbs & Prepositions<br><br>Native Sense Approach</div>';
+    } else if (data.type === 'blank') {
+      div.innerHTML = '';
+    } else {
+      var side = (idx % 2 === 0) ? 'l' : 'r';
+      div.innerHTML =
+        '<div style="width:100%;height:calc(100% - 20px);overflow:hidden;">' + data.html + '</div>' +
+        '<div class="pg-num ' + side + '">' + idx + '</div>';
+    }
+    return div;
+  }
+
+  function init() {
+    var result = buildPages();
+    allPages = result.pages;
+    tocEntries = result.toc;
+
+    var bkEl = document.getElementById('bk');
+    var ba = document.getElementById('ba');
+    bkEl.innerHTML = '';
+
+    var cw = ba.clientWidth;
+    var ch = ba.clientHeight;
+    var pageW, pageH;
+
+    if (isMobile) {
+      pageW = Math.min(cw - 12, 480);
+      pageH = ch - 12;
+    } else {
+      var maxW = (cw - 40) / 2;
+      var maxH = ch - 16;
+      var ratio = 0.7;
+      if (maxW / maxH > ratio) { pageH = maxH; pageW = Math.floor(pageH * ratio); }
+      else { pageW = Math.floor(maxW); pageH = Math.floor(pageW / ratio); }
+    }
+
+    for (var i = 0; i < allPages.length; i++) bkEl.appendChild(makePage(allPages[i], i));
+
+    var tocUl = document.getElementById('toc');
+    tocUl.innerHTML = '';
+    for (var t = 0; t < tocEntries.length; t++) {
+      var e = tocEntries[t];
+      var li = document.createElement('li');
+      if (e.isChapter) li.className = 'ch';
+      li.innerHTML = e.title + ' <span class="pg">p.' + e.pageIndex + '</span>';
+      li.setAttribute('data-p', e.pageIndex);
+      tocUl.appendChild(li);
+    }
+    tocUl.addEventListener('click', function(ev) {
+      var li = ev.target.closest('[data-p]');
+      if (li && pageFlip) { pageFlip.flip(parseInt(li.getAttribute('data-p'))); closeSb(); }
+    });
+
+    pageFlip = new St.PageFlip(bkEl, {
+      width: pageW, height: pageH, size: 'fixed', showCover: true,
+      mobileScrollSupport: false, usePortrait: isMobile, drawShadow: true,
+      flippingTime: 700, maxShadowOpacity: 0.25, startPage: 0, autoSize: false
+    });
+
+    pageFlip.loadFromHTML(document.querySelectorAll('#bk .page'));
+    pageFlip.on('flip', function(ev) { upPI(ev.data); });
+    upPI(0);
+    document.getElementById('ld').style.display = 'none';
+  }
+
+  function upPI(pg) {
+    var txt = (pg + 1) + ' / ' + allPages.length;
+    document.getElementById('pi').textContent = txt;
+    document.getElementById('pi2').textContent = txt;
+  }
+
+  function openSb() { document.getElementById('sb').classList.add('open'); document.getElementById('ov').classList.add('open'); }
+  function closeSb() { document.getElementById('sb').classList.remove('open'); document.getElementById('ov').classList.remove('open'); }
+
+  document.getElementById('tocBtn').addEventListener('click', openSb);
+  document.getElementById('sbClose').addEventListener('click', closeSb);
+  document.getElementById('ov').addEventListener('click', closeSb);
+  document.getElementById('pv').addEventListener('click', function() { if (pageFlip) pageFlip.flipPrev(); });
+  document.getElementById('nx').addEventListener('click', function() { if (pageFlip) pageFlip.flipNext(); });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { if (pageFlip) pageFlip.flipNext(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { if (pageFlip) pageFlip.flipPrev(); }
+  });
+
+  var dark = false;
+  document.getElementById('dk').addEventListener('click', function() {
+    dark = !dark;
+    document.documentElement.classList.toggle('dark-mode', dark);
+    document.body.classList.toggle('dark-mode', dark);
+    this.textContent = dark ? '\u2600' : '\u263D';
+  });
+
+  var rto;
+  window.addEventListener('resize', function() {
+    clearTimeout(rto);
+    rto = setTimeout(function() { var nm = window.innerWidth <= 800; if (nm !== isMobile) { isMobile = nm; init(); } }, 600);
+  });
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
+</body>
+</html>
